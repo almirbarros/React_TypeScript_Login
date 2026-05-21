@@ -95,7 +95,11 @@ Eliminação de componentes vazios de espaçamento vertical (`<Spacing />`). A d
 Esta seção apresenta o comportamento visual e os estados do formulário com base nas regras de negócio implementadas com o **Yup** e o **React Hook Form**.
 
 ### 1. Formulário Válido (Botão Liberado)
-Quando todos os campos atendem aos critérios de validação (e-mail estruturado corretamente e senha com no mínimo 6 caracteres), o botão **Entrar** é ativado automaticamente em tempo real (`mode: "onChange"`).
+Quando todos os campos atendem aos critérios de validação (e-mail estruturado corretamente e senha com no mínimo 6 caracteres).
+
+> [!IMPORTANT]
+> Quando todos os campos atendem aos critérios de validação, **o botão Entrar é ativado automaticamente em tempo real** (`mode: "onChange"`).
+
 <img width="596" height="407" alt="image" src="https://github.com/user-attachments/assets/dd00e23b-3414-4af4-9c3d-558b3f9faf73" />
 
 ### 2. Campo de E-mail Obrigatório (E-mail Vazio)
