@@ -1,59 +1,62 @@
 import { useForm } from "react-hook-form";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Container, LoginContainer, Column, Spacing, Title } from "./styles";
-import { defaultValues, IFormLogin } from "./types";
+import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
+import { Container, LoginContainer, Column, Title } from "./styles";
+import { defaultValues } from "./types";
+import type { IFormLogin } from "./types";
 
-const schema = yup
-  .object({
-    email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
-    password: yup
-      .string()
-      .min(6, "No minimo 6 caracteres")
-      .required("Campo obrigatório"),
-  })
-  .required();
+const schema = yup.object({
+  email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
+  password: yup.string().min(6, "No mínimo 6 caracteres").required("Campo obrigatório"),
+}).required();
 
-const Login = () => {
+export const Login = () => {
   const {
     control,
-    formState: { errors, isValid },
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting },
   } = useForm<IFormLogin>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
-    defaultValues,
+    mode: "onChange",
     reValidateMode: "onChange",
+    defaultValues,
   });
+
+  const onSubmit = (data: IFormLogin) => {
+    console.log("Dados enviados com sucesso:", data);
+  };
 
   return (
     <Container>
-      <LoginContainer>
+      <LoginContainer as="form" onSubmit={handleSubmit(onSubmit)}>
         <Column>
           <Title>Login</Title>
-          <Spacing />
+          
           <Input
             name="email"
             placeholder="Email"
             control={control}
-            errorMessage={errors?.email?.message}
+            errorMessage={errors.email?.message}
           />
-          <Spacing />
+          
           <Input
             name="password"
             type="password"
             placeholder="Senha"
             control={control}
-            errorMessage={errors?.password?.message}
+            errorMessage={errors.password?.message}
           />
-          <Spacing />
-          <Button title="Entrar" />
+          
+          <Button 
+            title={isSubmitting ? "Carregando..." : "Entrar"} 
+            type="submit"
+            disabled={!isValid || isSubmitting}
+          />
         </Column>
       </LoginContainer>
     </Container>
   );
 };
-
-export default Login;

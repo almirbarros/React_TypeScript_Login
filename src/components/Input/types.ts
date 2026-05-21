@@ -1,8 +1,9 @@
-import { Control } from "react-hook-form";
-import { IFormLogin } from "../../pages/Login/types";
+import type { ComponentPropsWithoutRef } from "react";
+import type { Control } from "react-hook-form";
+import type { IFormLogin } from "../../pages/Login/types"; // Mantenha o nome original do seu arquivo externo
 
-export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    control: Control<IFormLogin, any>   
-    name: "email" | "password";
-    errorMessage?: string;
+export interface InputProps extends ComponentPropsWithoutRef<"input"> {
+  control: Control<IFormLogin, any>;
+  name: "email" | "password";
+  errorMessage?: string;
 }

@@ -1,15 +1,15 @@
-import { InputContainer, ErrorMessage } from "./styles";
-import { IInputProps } from "././types";
 import { Controller } from "react-hook-form";
+import { InputContainer, ErrorMessage } from "./styles";
+import type { InputProps } from "./types";
 
-const Input = ({ control, name, errorMessage, ...rest }: IInputProps) => {
+export const Input = ({ control, name, errorMessage, ...rest }: InputProps) => {
   return (
     <>
-      <InputContainer>
+      <InputContainer $hasError={!!errorMessage}>
         <Controller
           control={control}
           name={name}
-          render={({ field: { onChange, onBlur, value, ref } }) => (
+          render={({ field: { onChange, onBlur, value = "", ref } }) => (
             <input
               {...rest}
               onChange={onChange}
@@ -20,9 +20,7 @@ const Input = ({ control, name, errorMessage, ...rest }: IInputProps) => {
           )}
         />
       </InputContainer>
-      {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </>
   );
 };
-
-export default Input;

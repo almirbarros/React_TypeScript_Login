@@ -1,21 +1,21 @@
 import { createGlobalStyle } from 'styled-components';
 
-export default createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
-        font-family: 'Nunito', sans-serif;
-        box-sizing:  border-box;
+        box-sizing: border-box;
     }
 
     body {
         font-family: 'Nunito', sans-serif;
-        margin: 0;
-        padding: 0;
         background-color: #81259D;
+        -webkit-font-smoothing: antialiased; /* Melhora a renderização da fonte no Chrome/Safari */
+        -moz-osx-font-smoothing: grayscale; /* Melhora a renderização da fonte no Firefox (Mac) */
     }
 
-    input, button, textarea, h1, h2, h3, h4, h5, h6 {
-        font-family: 'Nunito', sans-serif;
+    /* Elementos que não herdam a fonte do body por padrão no HTML */
+    input, button, textarea, select {
+        font-family: inherit; /* Herda automaticamente 'Nunito' do body */
     }
-`
+`;
