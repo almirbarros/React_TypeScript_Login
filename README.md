@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# Tela de Login - React 19 + Vite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto consiste em uma tela de autenticação moderna e totalmente otimizada, desenvolvida como um desafio prático de desenvolvimento frontend. A aplicação aplica conceitos rigorosos de tipagem estrita, boas práticas de arquitetura (Clean Code) e gerenciamento eficiente de formulários.
 
-## Available Scripts
+## 🛠️ Tecnologias e Core da Aplicação
 
-In the project directory, you can run:
+- **Framework**: [React 19](https://react.dev) — Versão estável mais recente do ecossistema, utilizando a API moderna `createRoot`.
+- **Linguagem**: [TypeScript 5.x](https://typescriptlang.org) — Tipagem estrita para segurança de dados e autocomplete robusto em tempo de desenvolvimento.
+- **Ferramenta de Build (Bundler)**: [Vite 6.x](https://vite.dev) — Substituindo o antigo e descontinuado `react-scripts` (CRA) para garantir compilações ultra-rápidas baseadas em *esbuild*.
+- **Gerenciador de Pacotes**: [Yarn v4](https://yarnpkg.com) — Versão modernizada do Yarn configurada via Corepack do Node.js, com cache global otimizado e instalações instantâneas.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 📦 Bibliotecas Utilizadas
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+| Biblioteca | Versão | Função no Projeto |
+| :--- | :--- | :--- |
+| **`react-hook-form`** | `^7.54.0` | Gerenciamento de estado de formulários sem re-renderizações desnecessárias. |
+| **`yup`** | `^1.4.0` | Validação de esquemas de dados (*schema validation*) baseada em regras de negócio. |
+| **`@hookform/resolvers`**| `^3.9.0` | Ponte de integração para o `react-hook-form` ler as validações do `yup`. |
+| **`styled-components`** | `^6.1.11` | Estilização por meio de *CSS-in-JS* com suporte nativo a tipos do TypeScript. |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧱 Estrutura de Pastas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+O projeto adota uma arquitetura baseada em **Componentização Reutilizável e Separação de Conceitos (Concerns)**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+├── src/
+│   ├── components/            # Componentes genéricos e reutilizáveis
+│   │   ├── Button/            # Botão genérico acessível com herança de propriedades HTML
+│   │   └── Input/             # Input genérico integrado ao React-Hook-Form e com borda de erro dinâmica
+│   ├── pages/                 # Páginas/Telas principais da aplicação
+│   │   └── Login/             # Tela de Login (valida e submete os dados de formulário)
+│   ├── global.ts              # Reset de CSS global, definição de fontes (Nunito) e suavizações
+│   └── index.tsx              # Ponto de entrada do aplicativo React 19
+├── index.html                 # Arquivo HTML principal (movido para a raiz exigido pelo Vite)
+├── tsconfig.json              # Configurações do TypeScript otimizadas para Bundler (Vite)
+└── vite.config.ts             # Configuração central de plugins do Vite
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 💡 Práticas de Desenvolvimento Implementadas
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 1. Named Exports e Consistência
+Abandono completo do uso de `export default` em favor de **Named Exports** (`export const Component`). Isso mitiga erros de importação fantasma no Vite, garante consistência absoluta nos nomes dos componentes ao longo do projeto e melhora a eficiência da refatoração automática no VS Code.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Otimização de Performance com `import type`
+Todas as assinaturas de interfaces e contratos do TypeScript são importadas utilizando explicitamente o prefixo `type` (ex: `import type { FormLogin } from './types'`). Isso permite que o compilador isole e remova completamente os metadados de tipagem do arquivo final JavaScript em produção, gerando um bundle mais leve.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 3. Herança de Atributos Nativos do HTML
+Os componentes genéricos de interface utilizam `ComponentPropsWithoutRef`. O botão customizado, por exemplo, herda nativamente todas as propriedades válidas de uma tag `<button>` (como `disabled` e `type`), reduzindo propriedades duplicadas e melhorando o suporte a leitores de tela.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 4. Transient Props (`$hasError`) do Styled Components v6
+Implementação do prefixo `$` em propriedades dinâmicas passadas aos componentes estilizados. Isso garante que atributos customizados (como a cor da borda quando há um erro) sirvam apenas para decisões CSS e não poluam a árvore de elementos do DOM real no navegador.
 
-## Learn More
+### 5. Layout Moderno com Flexbox e `gap`
+Eliminação de componentes vazios de espaçamento vertical (`<Spacing />`). A distribuição espacial entre o título, os inputs e o botão de ação é controlada nativamente através da propriedade `gap: 16px` no container Flexbox.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 6. Engenharia de UX em Formulários
+- **Validação em Tempo Real**: Configuração do `mode: "onChange"` no React Hook Form para liberar ou bloquear o botão de envio no exato caractere em que o formulário se torna válido.
+- **Tratamento de Concorrência**: Bloqueio dinâmico do botão através do estado `isSubmitting`, evitando cliques duplos acidentais que sobrecarregam requisições.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+
+## 🚀 Como Executar o Projeto
+
+1. Certifique-se de ter o **Node.js** instalado e o **Corepack** ativado:
+   ```bash
+   corepack enable
+   ```
+
+2. Instale as dependências utilizando o Yarn v4:
+   ```bash
+   yarn install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   yarn dev
+   ```
+
+4. Para gerar o build de produção:
+   ```bash
+   yarn build
+   ```
