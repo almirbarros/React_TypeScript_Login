@@ -87,3 +87,27 @@ Eliminação de componentes vazios de espaçamento vertical (`<Spacing />`). A d
    ```bash
    yarn build
    ```
+
+---
+
+## 📸 Demonstração e Fluxos de Validação
+
+Esta seção apresenta o comportamento visual e os estados do formulário com base nas regras de negócio implementadas com o **Yup** e o **React Hook Form**.
+
+### 1. Formulário Válido (Botão Liberado)
+Quando todos os campos atendem aos critérios de validação (e-mail estruturado corretamente e senha com no mínimo 6 caracteres), o botão **Entrar** é ativado automaticamente em tempo real (`mode: "onChange"`).
+<img width="596" height="407" alt="image" src="https://github.com/user-attachments/assets/dd00e23b-3414-4af4-9c3d-558b3f9faf73" />
+
+### 2. Campo de E-mail Obrigatório (E-mail Vazio)
+Se o usuário interagir com o campo de e-mail e deixá-lo em branco (ou apagar o conteúdo), o sistema dispara o feedback visual instantâneo com a borda do container vermelha e a mensagem de obrigatoriedade.
+
+<img width="567" height="463" alt="image" src="https://github.com/user-attachments/assets/d1bd2a40-c74c-470c-bf97-8cbe02d4c72f" />
+
+### 3. Erro de E-mail e Senha Simultâneos
+Caso o usuário tente preencher os campos incorretamente (como um e-mail sem `@/domain` e uma senha curta com menos de 6 caracteres), o componente genérico de Input renderiza os múltiplos erros simultaneamente, bloqueando o botão de envio.
+
+<img width="556" height="505" alt="image" src="https://github.com/user-attachments/assets/a4898053-0c34-4321-8ae0-0ec9bb004c03" />
+
+
+
+
