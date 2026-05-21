@@ -3,24 +3,43 @@ import styled from 'styled-components';
 export const InputContainer = styled.div<{ $hasError?: boolean }>`
     width: 100%;
     height: 42px;
-    color: #FFF;
+    color: #333;
 
-    /* Muda a cor da borda para vermelho caso exista um erro */
     border: 1px solid ${props => props.$hasError ? '#FF0000' : '#81259D'};
     border-radius: 21px;
     overflow: hidden;
-    padding: 0 10px;
+    padding: 0 14px 0 18px; /* Mais espaço na esquerda e ajuste fino na direita */
     display: flex;
     align-items: center;
-    transition: border-color 0.2s ease-in-out; /* Suaviza a troca de cor da borda */
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    transition: border-color 0.2s ease-in-out;
     
     & input {
-        width: 100%;
-        height: 100%; /* Ajustado para 100% para respeitar o padding do container */
+        flex: 1; /* Faz o input ocupar todo o espaço restante antes do olho */
+        height: 100%;
         background-color: transparent;
         border: 0;
         outline: none;
-        color: #333; /* Ajuste se o texto do input precisar de outra cor */
+        color: #333;
+        font-size: 14px;
+    }
+`;
+
+export const TogglePasswordButton = styled.button`
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #81259D; /* Mantém a identidade visual roxa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+        color: #a663ba; /* Clarea levemente o ícone no hover */
     }
 `;
 
